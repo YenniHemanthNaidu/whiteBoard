@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf8">
+    <meta name="viewport" content="width-device-width">
+    <meta name="description" content="Class Room Board">
+    <meta name="hemanth">
+    <title>Class Room Board</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<!--BODY                           -->
+
+<body>
+    <header>
+
+        <div id="branding">
+            <h1><span class="highlight">Class</span>Room</h1>
+            <nav>
+                <div class="colors">
+                    <ul>
+                        <li id="red" onclick="color(this)"><img src="images/red.jpeg"> </li>
+                        <li id="green" onclick="color(this)"><img src="images/green.jpeg"></li>
+                        <li id="blue" onclick="color(this)"><img src="images/Blue.jpeg "></li>
+                        <li id="black" onclick="color(this)"><img src="images/Black.png"></li>
+                        <li id="earser" onclick="color(this)"><img src="images/earser.png"></li>
+                    </ul>
+                </div>
+                <div class="controls">
+                    <img src="images/arrow.png" id="up">
+                    <p id="thickness">Thickness</p>
+                    <img src="images/arrow.png" id="down">
+                </div>
+            </nav>
+        </div>
+    </header>
+
+
+    <div class=" main ">
+        <canvas id="myCanvas " width=10000px, height=100000; style="border:1px solid #000000; "></canvas>
+        <div id="pen "></div>
+    </div>
+
+
+    <script type="text/javascript ">
+        var canvas = document.getElementById("myCanvas ");
+        var ctx = canvas.getContext('2d');
+        resize();
+        var red = document.getElementById("red");
+        var green = document.getElementById("green");
+        var blue = document.getElementById("blue");
+        var black = document.getElementById("black");
+
+        var pos = {
+            x: 0,
+            y: 0
+        };
+        var x = "blue";
+        y = 2;
+        var inc = document.getElementById("up");
+        var dec = document.getElementById("down");
+        window.addEventListener('resize', resize);
+        document.addEventListener('mousemove', draw);
+        document.addEventListener('mousedown', setPosition);
+        document.addEventListener('mouseenter', setPosition);
+
+        function setPosition(e) {
+            pos.x = e.clientX;
+            pos.y = e.clientY;
+        }
+        // resize canvas
+        function resize() {
+            ctx.canvas.width = window.innerWidth;
+            ctx.canvas.height = window.innerHeight;
+        }
+
+        function color(obj) {
+            switch (obj.id) {
+                case "green":
+                    x = "green";
+                    break;
+                case "blue":
+                    x = "blue";
+                    break;
+                case "red":
+                    x = "red";
+                    break;
+                case "black":
+                    x = "black";
+                    break;
+                case "earser":
+                    x = "white";
+                    y = 25;
+                    break;
+            }
+        }
+
+        inc.onclick = function sizeInc() {
+            y++;
+
+        }
+
+        dec.onclick = function sizeDec() {
+            y--;
+        }
+
+        function draw(e) {
+            // mouse left button must be pressed
+            if (e.buttons !== 1) return;
+
+            ctx.beginPath(); // begin
+
+            ctx.lineWidth = y;
+            ctx.lineCap = 'round';
+            ctx.strokeStyle = x;
+
+            ctx.moveTo(pos.x, pos.y); // from
+            setPosition(e);
+            ctx.lineTo(pos.x, pos.y); // to
+
+            ctx.stroke(); // draw it!
+        }
+    </script>
+</body>
+
+</html>
